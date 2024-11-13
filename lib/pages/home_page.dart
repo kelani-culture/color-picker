@@ -1,4 +1,5 @@
 import 'package:color_picker/pages/todolist_tile.dart';
+import 'package:color_picker/utils/alert_box.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController _controller = TextEditingController();
   List tasks = [
     ["Write your code", false],
     ["Eat your food", false],
@@ -25,8 +27,30 @@ class _HomePageState extends State<HomePage> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const AlertDialog(title: Text("Add task"));
+          return AlertDialog(
+            backgroundColor: const Color(0xFF7cb855),
+            title: const Text("Add task"),
+            content: AlertBox(
+              onSave: saveTask,
+              onCancel: cancelTask,
+              controller: _controller,
+            ),
+          );
         });
+  }
+
+  // save user task
+  void saveTask() {
+    setState(() {
+      tasks.add([_controller.text, false]);
+      Navigator.of(context).pop();
+    });
+    _controller.clear();
+  }
+
+  // cancel user task
+  void cancelTask() {
+    Navigator.of(context).pop();
   }
 
   @override
