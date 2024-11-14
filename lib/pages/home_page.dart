@@ -42,7 +42,14 @@ class _HomePageState extends State<HomePage> {
   // save user task
   void saveTask() {
     setState(() {
-      tasks.add([_controller.text, false]);
+      if (_controller.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Please enter a task before saving"),
+          backgroundColor: Color.fromARGB(255, 248, 17, 0),
+        ));
+      } else {
+        tasks.add([_controller.text, false]);
+      }
       Navigator.of(context).pop();
     });
     _controller.clear();
@@ -51,6 +58,13 @@ class _HomePageState extends State<HomePage> {
   // cancel user task
   void cancelTask() {
     Navigator.of(context).pop();
+  }
+
+  // delete task
+  void deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+    });
   }
 
   @override
@@ -73,6 +87,9 @@ class _HomePageState extends State<HomePage> {
               taskName: tasks[index][0],
               onChanged: (value) {
                 checkTask(value, index);
+              },
+              onDelete: (context) {
+                deleteTask(index);
               },
             );
           }),

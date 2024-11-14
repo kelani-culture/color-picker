@@ -29,7 +29,7 @@ class AlertBox extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
-                      backgroundColor: Color(0xFFbbe06c)),
+                      backgroundColor: const Color(0xFFbbe06c)),
                   child: const Text("save"),
                 ),
               ),
